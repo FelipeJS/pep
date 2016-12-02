@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @IdClass(PrestadorProdViewPK.class)
-@Table(schema = "consulta", name = "VDIC_PRESTADOR_PROD_GLOBAL")
+@Table(name = "VDIC_PRESTADOR_PROD_GLOBAL")
 public class PrestadorProdView implements Serializable {
 
 	@Id

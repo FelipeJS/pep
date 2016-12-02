@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "consulta", name = "VDIC_PRESCRICAO_PRESTADOR")
+@Table(name = "VDIC_PRESCRICAO_PRESTADOR")
 public class PrescricaoPrestadorView {
 
 	@Id

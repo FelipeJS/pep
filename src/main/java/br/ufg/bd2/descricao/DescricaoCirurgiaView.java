@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "consulta", name = "VDIC_DESCRICAO_CIRURGIA")
+@Table(name = "VDIC_DESCRICAO_CIRURGIA")
 public class DescricaoCirurgiaView {
 
 	@Id

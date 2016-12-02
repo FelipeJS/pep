@@ -92,7 +92,7 @@ angular.module('starter.controllers', [])
 			$scope.pesquisar = 'Preenchido incorretamente';
 		}else{
 			desabilitar();
-			$http.get("/produtividade/produtividade/listarPorPeriodo?mesInicio="+ mesInicio + "&mesFim=" + mesFim + "&ano=" + ano, '').success(function (produtividades) {
+			$http.get("/produtividade/listarPorPeriodo?mesInicio="+ mesInicio + "&mesFim=" + mesFim + "&ano=" + ano, '').success(function (produtividades) {
 				abilitar();
 				
 				$scope.produtividades = produtividades;
@@ -136,7 +136,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getPrescricao = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/prescricao/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/prescricao/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (prescricoes) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -150,7 +150,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getEvolucao = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/prescricao/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/prescricao/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (prescricoes) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -164,7 +164,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getUrgencia = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/atendime/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/atendime/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (atendimentos) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -178,7 +178,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getAmbulatorio = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/atendime/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/atendime/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (atendimentos) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -192,7 +192,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getCirurgia = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/cirurgia/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/cirurgia/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (cirurgias) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -206,7 +206,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getAuxiliar = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/cirurgia/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/cirurgia/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (cirurgias) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -220,7 +220,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getParecerSol = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/parecer/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/parecer/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (pareceres) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -234,7 +234,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getParecerRes = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/parecer/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/parecer/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (pareceres) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -248,7 +248,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.getEncaminha = function (cdPrestador, mesFF, ano, selecionado) {
 		desabilitar();
-		$http.get("/produtividade/encaminha/listarPorData?cdPrestador="+ cdPrestador + 
+		$http.get("/encaminha/listarPorData?cdPrestador="+ cdPrestador + 
 					"&mes=" + mesFF + "&ano=" + ano, '').success(function (encaminhamentos) {
 			abilitar();
 			setSelecionado(selecionado);
@@ -280,7 +280,7 @@ angular.module('starter.controllers', [])
 	$scope.ano = $stateParams.ano;
 	
 	$scope.getItPreMed = function () {
-		$http.get("/produtividade/itpremed/listarPorData?cdPreMed="+ $scope.cdPreMed + "&cdPrestador=" + $scope.cdPrestador +
+		$http.get("/itpremed/listarPorData?cdPreMed="+ $scope.cdPreMed + "&cdPrestador=" + $scope.cdPrestador +
 					"&mes=" + $scope.mesFF + "&ano=" + $scope.ano, '').success(function (itens) {
 			$scope.itens = itens;
 			$scope.sortType     = 'cdItPreMed'; // set the default sort type
@@ -299,7 +299,7 @@ angular.module('starter.controllers', [])
 	$scope.ano = $stateParams.ano;
 	
 	$scope.getEvolucao = function () {
-		$http.get("/produtividade/prescricao/listarPorData?cdPrestador="+ $scope.cdPrestador + 
+		$http.get("/prescricao/listarPorData?cdPrestador="+ $scope.cdPrestador + 
 					"&mes=" + $scope.mesFF + "&ano=" + $scope.ano, '').success(function (prescricoes) {
 			$scope.prescricoes = prescricoes;
 			$scope.cdPreMedFilter = $scope.cdPreMed;
@@ -319,7 +319,7 @@ angular.module('starter.controllers', [])
 		$scope.ano = $stateParams.ano;
 		
 		$scope.getDescricao = function () {
-			$http.get("/produtividade/descricao/consultar?cdAvisoCirurgia="+ $scope.cdAvisoCirurgia, '').success(function (descricao) {
+			$http.get("/descricao/consultar?cdAvisoCirurgia="+ $scope.cdAvisoCirurgia, '').success(function (descricao) {
 				$scope.descricao = descricao;
 				$scope.cdAvisoCirurgiaFilter = $scope.cdAvisoCirurgia;
 				$scope.sortType     = 'cdAvisoCirurgia'; // set the default sort type
