@@ -1,0 +1,50 @@
+.header .col {
+	background-color: lightgrey;
+}
+
+.col {
+	border: solid 1px grey;
+	border-bottom-style: none;
+	border-right-style: none;
+	font-family: sans-serif, serif, cursive;
+	font-size: 0.8em;
+	white-space: normal;
+}
+
+.col:last-child {
+	border-right: solid 1px grey;
+}
+
+.row:last-child .col {
+	border-bottom: solid 1px grey;
+}
+
+a {
+	color: black;
+}
+
+.item{
+	white-space: normal;
+}
+
+.borda{
+	margin: 0.5px 0.5px 0.5px 0.5px;	
+}
+
+@media ( max-width : 480px) {
+	.col {
+		border: solid 1px grey;
+		border-bottom-style: none;
+		border-right-style: none;
+		font-family: sans-serif, serif, cursive;
+		font-size: 0.6em;
+	}
+	.prestador {
+		font-size: 0.6em;
+		white-space: normal;
+	}
+	.especialidade {
+		font-size: 0.6em;
+		white-space: normal;
+	}
+}

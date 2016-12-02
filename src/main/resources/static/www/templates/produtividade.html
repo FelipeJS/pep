@@ -1,0 +1,212 @@
+<ion-view view-title="Produtividade">
+
+	<link rel="stylesheet" type="text/css" href="css/produtividade.css">
+	   
+   <ion-content class="has-header">
+		<ion-list> 
+		 	<div class="list list-inset">
+	 			<form>
+			 		<div class="row">
+			 			<label class="item item-input item-stacked-label col-33">
+				 			<span class="input-label">Mês Inicial</span> 
+				   			<input class="input" type="text" placeholder="2 digitos Ex: 08" ng-model="mesInicio"
+				   			 maxlength="2"/>
+			 			</label>
+			 			<label class="item item-input item-stacked-label col-33">
+				 			<span class="input-label">Mês Final</span> 
+				   			<input class="input" type="text" placeholder="2 digitos Ex: 09" ng-model="mesFim"
+				   			 maxlength="2"/>
+			   			 </label>
+			   			 <label class="item item-input item-stacked-label col-33">
+				 			<span class="input-label">Ano</span>
+				   			<input class="input" type="text" placeholder="4 digitos Ex: 2016" ng-model="ano"
+				   			 maxlength="4"></input>
+				   		</label>
+			 		</div>
+		 			<button class="button button-positive button-block" ng-click="getProdutividade(mesInicio, mesFim, ano)"
+				   				ng-disabled="desabilitado">{{pesquisar}}</button>
+				</form>
+		 	</div>
+		 	
+		    <div class="list row">
+	 			<label class="item item-input col-20">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Prestador" ng-model="prestadorFilter">
+	 			</label>
+	 			<label class="item item-input col-20">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Especialidade" ng-model="especialidadeFilter">
+	 			</label>
+	 			<label class="item item-input col-20">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Vínculo" ng-model="tpVinculoFilter">
+	 			</label>
+	 			<label class="item checkbox col-20">
+	 				<ul>
+						<li class="item item-checkbox">
+						   <i class="icon placeholder-icon">Residente</i>
+						   <label class="checkbox">
+						   <input type="checkbox" ng-model="residente">
+						   </label>
+						</li>
+					</ul>
+	 				<span ng-hide="true">{{residente ? snAtuanteFilter = 'R' : snAtuanteFilter = ''}}</span>
+	 			</label>
+	 			<label class="item  col-10">
+	 				<button class="button button-balanced button-small col" ng-click="atualizarTotal(prestadorFilter,especialidadeFilter,tpVinculoFilter,snAtuanteFilter)"
+				   				ng-disabled="desabilitado">Atualizar totais</button>
+				    
+	 			</label>
+	 			<label class="item  col-10">
+	 				<button class="button button-royal button-small col"  ng-click="recuperarLista()"
+				   				ng-disabled="desabilitado">Recuperar lista</button>
+			    </label>
+	 		</div>
+		 		
+		 	<ion-item>
+		 		<div class="row header">
+		 		
+		          <div class="col col-20">
+		          	<a ng-click="sortType = 'prestador'; sortReverse = !sortReverse">
+		          Prestador
+		          	<span ng-show="sortType == 'prestador' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'prestador' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col-20">
+		          	<a ng-click="sortType = 'especialidade'; sortReverse = !sortReverse">
+		          Especialidade
+		          	<span ng-show="sortType == 'especialidade' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'especialidade' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col-10">
+		          	<a ng-click="sortType = 'tpVinculo'; sortReverse = !sortReverse">
+		          Vínculo
+		          	<span ng-show="sortType == 'tpVinculo' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'tpVinculo' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'mesFF'; sortReverse = !sortReverse">
+		          	Mês
+		          	<span ng-show="sortType == 'mesFF' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'mesFF' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'pctUrg'; sortReverse = !sortReverse">
+		          	Urgêcia
+		          	<span ng-show="sortType == 'pctUrg' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'pctUrg' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'pctAtEncam'; sortReverse = !sortReverse">
+		          Encamin
+		          	<span ng-show="sortType == 'pctAtEncam' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'pctAtEncam' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'pareceresSol'; sortReverse = !sortReverse">
+		          Par Sol
+		          	<span ng-show="sortType == 'pareceresSol' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'pareceresSol' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'pareceresRea'; sortReverse = !sortReverse">
+		          Par Res
+		          	<span ng-show="sortType == 'pareceresRea' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'pareceresRea' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'cirurgias'; sortReverse = !sortReverse">
+		          Cirurgia
+		          	<span ng-show="sortType == 'cirurgias' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'cirurgias' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'prescricoes'; sortReverse = !sortReverse">
+		          Prescri
+		          	<span ng-show="sortType == 'prescricoes' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'prescricoes' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'evolucoes'; sortReverse = !sortReverse">
+		          Evolução
+		          	<span ng-show="sortType == 'evolucoes' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'evolucoes' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'auxiliar'; sortReverse = !sortReverse">
+		          Auxiliar
+		          	<span ng-show="sortType == 'auxiliar' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'auxiliar' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		          <div class="col col">
+		          	<a ng-click="sortType = 'atendAmb'; sortReverse = !sortReverse">
+		          Ambulat
+		          	<span ng-show="sortType == 'atendAmb' && !sortReverse" class="ion-arrow-down-b"></span>
+	           		<span ng-show="sortType == 'atendAmb' && sortReverse" class="ion-arrow-up-b"></span>
+		          	</a>
+		          </div>
+		          
+		        </div>
+		        <div class="row">
+	        		<div class="col col-20 prestador"><b>Totais</b></div>
+		        	<div class="col col-20 especialidade"><b>...</b></div>
+		        	<div class="col col-10 especialidade"><b>...</b></div>
+		        	<div class="col col"><b>...</b></div>
+	          		<div class="col col"><b>{{totalPctUrg}}</b></div>
+	          		<div class="col col"><b>{{totalPctAtEncam}}</b></div>
+	          		<div class="col col"><b>{{totalPareceresSol}}</b></div>
+	          		<div class="col col"><b>{{totalPareceresRea}}</b></div>
+	          		<div class="col col"><b>{{totalCirurgias}}</b></div>
+	          		<div class="col col"><b>{{totalPrescricoes}}</b></div>
+	          		<div class="col col"><b>{{totalEvolucoes}}</b></div>
+	          		<div class="col col"><b>{{totalAuxiliar}}</b></div>
+	          		<div class="col col"><b>{{totalAtendAmb}}</b></div>
+	           	</div>
+	        	<div class="row" ng-repeat="produtividade in produtividades | orderBy:sortType:sortReverse 
+	        			| filter:{prestador:prestadorFilter} | filter:{tpVinculo:tpVinculoFilter} 
+	        			| filter:{snAtuante:snAtuanteFilter} | filter:{especialidade:especialidadeFilter}" >
+		        	
+	        		<div class="col col-20 prestador">
+	        			<a href="#/app/prestador/{{produtividade.cdPrestador}}/{{produtividade.mesFF}}/{{produtividade.ano}}/{{produtividade.prestador}}">{{produtividade.prestador}}</a>
+	        		</div>
+		        	<div class="col col-20 especialidade">{{produtividade.especialidade}}</div>
+		        	<div class="col col-10 especialidade">{{produtividade.tpVinculo}}</div>
+		        	<div class="col col">{{produtividade.mesFF}}</div>
+	          		<div class="col col">{{produtividade.pctUrg ? produtividade.pctUrg : produtividade.pctUrg = 0}}</div>
+	          		<div class="col col">{{produtividade.pctAtEncam ? produtividade.pctAtEncam : produtividade.pctAtEncam = 0}}</div>
+	          		<div class="col col">{{produtividade.pareceresSol ? produtividade.pareceresSol : produtividade.pareceresSol = 0}}</div>
+	          		<div class="col col">{{produtividade.pareceresRea ? produtividade.pareceresRea : produtividade.pareceresRea = 0}}</div>
+	          		<div class="col col">{{produtividade.cirurgias ? produtividade.cirurgias : produtividade.cirurgias = 0}}</div>
+	          		<div class="col col">{{produtividade.prescricoes ? produtividade.prescricoes : produtividade.prescricoes = 0}}</div>
+	          		<div class="col col">{{produtividade.evolucoes ? produtividade.evolucoes : produtividade.evolucoes = 0}}</div>
+	          		<div class="col col">{{produtividade.auxiliar ? produtividade.auxiliar : produtividade.auxiliar = 0}}</div>
+	          		<div class="col col">{{produtividade.atendAmb ? produtividade.atendAmb : produtividade.atendAmb = 0}}</div>
+	           	</div>
+	    	</ion-item>
+		</ion-list>
+    </ion-content>
+</ion-view>

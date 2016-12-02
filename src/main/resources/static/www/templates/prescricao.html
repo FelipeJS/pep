@@ -1,0 +1,70 @@
+<ion-view view-title="Prescrição">
+	<link rel="stylesheet" type="text/css" href="css/produtividade.css">
+	
+  <ion-content>
+  	<div class="list list-inset">
+	    	<div class="list">
+				<div class="item item-divider">
+				  <b>{{"Prescrição: "}}</b>
+				  {{cdPreMed}}  
+				</div>
+			</div>
+	</div>
+    <div class="list list-inset">
+	    <div class="list row">
+			<label class="item item-input col-50">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Item" ng-model="cdItPreMedFilter">
+			</label>
+			<label class="item item-input col-50">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Descrição" ng-model="dsTipPrescFilter">
+			</label>
+		</div>
+	 		
+
+ 		<div class="row header">
+	        <div class="col col-10">
+	        	<a ng-click="sortType = 'cdItPreMed'; sortReverse = !sortReverse">
+	        Item
+	        	<span ng-show="sortType == 'cdItPreMed' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'cdItPreMed' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+	        
+	        <div class="col col-10">
+	        	<a ng-click="sortType = 'dhRegistro'; sortReverse = !sortReverse">
+	        Dt Registro
+	        	<span ng-show="sortType == 'dhRegistro' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'dhRegistro' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+	        
+	        <div class="col col-50">
+	        	<a ng-click="sortType = 'dsTipPresc'; sortReverse = !sortReverse">
+	        Descrição
+	        	<span ng-show="sortType == 'dsTipPresc' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'dsTipPresc' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+	        
+	        <div class="col col">
+	        	<a ng-click="sortType = 'dsItPreMed'; sortReverse = !sortReverse">
+	        Observação
+	        	<span ng-show="sortType == 'dsItPreMed' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'dsItPreMed' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+        </div>
+        
+       	<div class="row" ng-repeat="item in itens | orderBy:sortType:sortReverse 
+       			| filter:{cdItPreMed:cdItPreMedFilter} | filter:{dsTipPresc:dsTipPrescFilter}">
+        	
+       		<div class="col col-10">{{item.cdItPreMed}}</div>
+       		<div class="col col-10">{{item.dhRegistro}}</div>
+       		<div class="col col-50">{{item.dsTipPresc}}</div>
+       		<div class="col col">{{item.dsItPreMed}}</div>
+       	</div>
+	</div>
+  </ion-content>
+</ion-view>

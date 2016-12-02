@@ -1,0 +1,47 @@
+<ion-view view-title="Descrição">
+	<link rel="stylesheet" type="text/css" href="css/produtividade.css">
+	
+  <ion-content>
+  	<div class="list list-inset">
+	    	<div class="list">
+				<div class="item item-divider">
+				  <b>{{"Aviso: "}}</b>
+				  {{cdAvisoCirurgia}}  
+				</div>
+			</div>
+	</div>
+    <div class="list list-inset">
+ 		<div class="row header">
+	        <div class="col col-60">
+	        	<a ng-click="sortType = 'loValor'; sortReverse = !sortReverse">
+	        Descrição
+	        	<span ng-show="sortType == 'loValor' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'loValor' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+	        
+	        <div class="col col-20">
+	        	<a ng-click="sortType = 'dhDocumento'; sortReverse = !sortReverse">
+	        Data
+	        	<span ng-show="sortType == 'dhDocumento' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'dhDocumento' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+	        
+	        <div class="col col-20">
+	        	<a ng-click="sortType = 'tpStatus'; sortReverse = !sortReverse">
+	        Status
+	        	<span ng-show="sortType == 'tpStatus' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'tpStatus' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+        </div>
+        
+       	<div class="row">
+       		<div class="col col-60">{{descricao.loValor}}</div>
+       		<div class="col col-20">{{descricao.dhDocumento}}</div>
+       		<div class="col col-20">{{descricao.tpStatus}}</div>
+       	</div>
+	</div>
+  </ion-content>
+</ion-view>

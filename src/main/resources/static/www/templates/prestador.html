@@ -1,0 +1,771 @@
+<ion-view view-title="Prestador">
+
+<link rel="stylesheet" type="text/css" href="css/produtividade.css">
+  
+  <ion-content>
+  	<div class="list list-inset">
+	    <div class="button-bar">
+	  		<a class="button button-positive button-small borda"  ng-disabled="desabilitado"
+	  			ng-click="getUrgencia(cdPrestador, mesFF, ano, 'urg'); isSelected('urg');"
+	  			ng-class="{'button-calm': selected == 'urg'}">Urgência</a>
+	  			
+	  		<a class="button button-positive button-small borda" ng-disabled="desabilitado"
+	  			ng-click="getEncaminha(cdPrestador, mesFF, ano, 'enc'); isSelected('enc');"
+	  			ng-class="{'button-calm': selected == 'enc'}">Encaminhado</a>
+	  			
+	  		<a class="button button-positive button-small borda" ng-disabled="desabilitado"
+	  			ng-click="getAmbulatorio(cdPrestador, mesFF, ano, 'amb'); isSelected('amb');"
+	  			ng-class="{'button-calm': selected == 'amb'}">Ambulatório</a>
+		</div>
+		<div class="button-bar">
+			<a class="button button-positive button-small borda" ng-disabled="desabilitado" 
+				ng-click="getPrescricao(cdPrestador, mesFF, ano, 'presc'); isSelected('presc');"
+				ng-class="{'button-calm': selected == 'presc'}">Prescrição</a>
+				
+			<a class="button button-positive button-small borda" ng-disabled="desabilitado"
+				ng-click="getParecerSol(cdPrestador, mesFF, ano, 'parSol'); isSelected('parSol');"
+				ng-class="{'button-calm': selected == 'parSol'}">Parecer Solicitado</a>
+				
+			<a class="button button-positive button-small borda" ng-disabled="desabilitado"
+				ng-click="getAuxiliar(cdPrestador, mesFF, ano, 'aux'); isSelected('aux');"
+				ng-class="{'button-calm': selected == 'aux'}">Auxiliar</a>
+		</div>
+		<div class="button-bar">
+			<a class="button button-positive button-small borda" ng-disabled="desabilitado" 
+				ng-click="getEvolucao(cdPrestador, mesFF, ano, 'evo'); isSelected('evo');"
+				ng-class="{'button-calm': selected == 'evo'}">Evolução</a>
+				
+	  		<a class="button button-positive button-small borda" ng-disabled="desabilitado"
+	  			ng-click="getParecerRes(cdPrestador, mesFF, ano, 'parRes'); isSelected('parRes');"
+	  			ng-class="{'button-calm': selected == 'parRes'}">Parecer Respondido</a>
+	  			
+	  		<a class="button button-positive button-small borda" ng-disabled="desabilitado"
+	  			ng-click="getCirurgia(cdPrestador, mesFF, ano, 'cir'); isSelected('cir');"
+	  			ng-class="{'button-calm': selected == 'cir'}">Cirurgia</a>
+	  	</div>
+	  	<div class="item item-divider">
+				  <b>{{"Prestador: "}}</b>
+				  {{cdPrestador}}  
+				  <b>{{"  Nome: "}}</b> 
+				  {{prestador}}
+				</div>
+	</div>
+	
+	<div class="list list-inset" ng-if="selecionado == 'presc'">
+ 		<div class="list row">
+ 			<label class="item item-input col-50">
+ 				<i class="icon ion-search placeholder-icon"></i>
+ 				<input type="text" placeholder="Prescrição" ng-model="cdPreMedFilter">
+ 			</label>
+ 			<label class="item item-input col-50">
+ 				<i class="icon ion-search placeholder-icon"></i>
+ 				<input type="text" placeholder="Paciente" ng-model="nmPacienteFilter">
+ 			</label>
+ 		</div>
+ 		
+ 		<div class="row header">
+ 		
+          <div class="col col-10">
+          	<a ng-click="sortType = 'cdPreMed'; sortReverse = !sortReverse">
+          Prescrição
+          	<span ng-show="sortType == 'cdPreMed' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdPreMed' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+          Atendimento
+          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'cdPaciente'; sortReverse = !sortReverse">
+          Prontuário
+          	<span ng-show="sortType == 'cdPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-30">
+          	<a ng-click="sortType = 'nmPaciente'; sortReverse = !sortReverse">
+          Paciente
+          	<span ng-show="sortType == 'nmPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'nmPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'dtAtendimento'; sortReverse = !sortReverse">
+          Dt Atendimento
+          	<span ng-show="sortType == 'dtAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'dtAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'dtAlta'; sortReverse = !sortReverse">
+          Dt Alta
+          	<span ng-show="sortType == 'dtAlta' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'dtAlta' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'dtPreMed'; sortReverse = !sortReverse">
+          Dt Prescrição
+          	<span ng-show="sortType == 'dtPreMed' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'dtPreMed' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'tpAtendimento'; sortReverse = !sortReverse">
+          Tp Atendimento
+          	<span ng-show="sortType == 'tpAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'tpAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+        </div>
+        
+       	<div class="row" ng-repeat="prescricao in prescricoes | orderBy:sortType:sortReverse 
+       			| filter:{cdPreMed:cdPreMedFilter} | filter:{nmPaciente:nmPacienteFilter}
+       			| filter:{nmObjeto:nmObjetoFilter}" >
+        	
+    		<div class="col col-10 prestador">
+    			<a href="#/app/prescricao/{{prescricao.cdPreMed}}/{{cdPrestador}}/{{mesFF}}/{{ano}}">{{prescricao.cdPreMed}}</a>
+    		</div>
+     		<div class="col col-10">{{prescricao.cdAtendimento}}</div>
+      		<div class="col col-10">{{prescricao.cdPaciente}}</div>
+      		<div class="col col-30">{{prescricao.nmPaciente}}</div>
+      		<div class="col col-10">{{prescricao.dtAtendimento}}</div>
+      		<div class="col col-10">{{prescricao.dtAlta}}</div>
+      		<div class="col col-10">{{prescricao.dtPreMed}}</div>
+      		<div class="col col-10">{{prescricao.tipoAtendimento}}</div>
+       	</div>
+	</div>  	
+	
+	<div class="list list-inset" ng-if="selecionado == 'evo'">
+		<div class="list row">
+			<label class="item item-input col-50">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Evolução" ng-model="cdPreMedFilter">
+			</label>
+			<label class="item item-input col-50">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Paciente" ng-model="nmPacienteFilter">
+			</label>
+		</div>
+	 		
+	 	<div class="row header">
+	 		
+	        <div class="col col-10">
+	        	<a ng-click="sortType = 'cdPreMed'; sortReverse = !sortReverse">
+	        	Evolução
+	        	<span ng-show="sortType == 'cdPreMed' && !sortReverse" class="ion-arrow-down-b"></span>
+	        	<span ng-show="sortType == 'cdPreMed' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+	          Atendimento
+	          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdPaciente'; sortReverse = !sortReverse">
+	          Prontuário
+	          	<span ng-show="sortType == 'cdPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-30">
+	          	<a ng-click="sortType = 'nmPaciente'; sortReverse = !sortReverse">
+	          Paciente
+	          	<span ng-show="sortType == 'nmPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'nmPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'dtAtendimento'; sortReverse = !sortReverse">
+	          Dt Atendimento
+	          	<span ng-show="sortType == 'dtAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dtAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'dtAlta'; sortReverse = !sortReverse">
+	          Dt Alta
+	          	<span ng-show="sortType == 'dtAlta' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dtAlta' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'dtPreMed'; sortReverse = !sortReverse">
+	          Dt Evolução
+	          	<span ng-show="sortType == 'dtPreMed' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dtPreMed' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'tpAtendimento'; sortReverse = !sortReverse">
+	          Tp Atendimento
+	          	<span ng-show="sortType == 'tpAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'tpAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	        </div>
+	        
+        	<div class="row" ng-repeat="prescricao in prescricoes | orderBy:sortType:sortReverse 
+        			| filter:{cdPreMed:cdPreMedFilter} | filter:{nmPaciente:nmPacienteFilter}
+        			| filter:{nmObjeto:nmObjetoFilter}" >
+	        	
+        		<div class="col col-10 prestador">
+        			<a href="#/app/evolucao/{{prescricao.cdPreMed}}/{{prescricao.cdPrestador}}/{{prescricao.mes}}/{{prescricao.ano}}">{{prescricao.cdPreMed}}</a>
+        		</div>
+	        	<div class="col col-10">{{prescricao.cdAtendimento}}</div>
+          		<div class="col col-10">{{prescricao.cdPaciente}}</div>
+          		<div class="col col-30">{{prescricao.nmPaciente}}</div>
+          		<div class="col col-10">{{prescricao.dtAtendimento}}</div>
+          		<div class="col col-10">{{prescricao.dtAlta}}</div>
+          		<div class="col col-10">{{prescricao.dtPreMed}}</div>
+          		<div class="col col-10">{{prescricao.tipoAtendimento}}</div>
+           	</div>
+	</div> 
+	
+	<div class="list list-inset" ng-if="selecionado == 'urg'">
+		<div class="list row">
+			<label class="item item-input col-50">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Atendimento" ng-model="cdAtendimentoFilter">
+			</label>
+			<label class="item item-input col-50">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Prontuário" ng-model="cdPacienteFilter">
+			</label>
+		</div>
+		
+		<div class="row header">
+		
+		       <div class="col col-20">
+		       	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+		       Atendimento
+		       	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+		       		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+		       	</a>
+		       </div>
+		       
+		       <div class="col col-20">
+		       	<a ng-click="sortType = 'cdPaciente'; sortReverse = !sortReverse">
+		       Prontuário
+		       	<span ng-show="sortType == 'cdPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+		       		<span ng-show="sortType == 'cdPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+		       	</a>
+		       </div>
+		       
+		       <div class="col col-20">
+		       	<a ng-click="sortType = 'nmPaciente'; sortReverse = !sortReverse">
+		       Paciente
+		       	<span ng-show="sortType == 'nmPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+		       		<span ng-show="sortType == 'nmPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+		       	</a>
+		       </div>
+		       
+		       <div class="col col-20">
+		       	<a ng-click="sortType = 'dtAtendimento'; sortReverse = !sortReverse">
+		       Dt Atendimento
+		       	<span ng-show="sortType == 'dtAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+		       		<span ng-show="sortType == 'dtAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+		       	</a>
+		       </div>
+		       
+		       <div class="col col-20">
+		       	<a ng-click="sortType = 'dtAlta'; sortReverse = !sortReverse">
+		       Dt Alta
+		       	<span ng-show="sortType == 'dtAlta' && !sortReverse" class="ion-arrow-down-b"></span>
+		       		<span ng-show="sortType == 'dtAlta' && sortReverse" class="ion-arrow-up-b"></span>
+		       	</a>
+		       </div>
+		       
+<!-- 		       <div class="col col-20"> -->
+<!-- 		       	<a ng-click="sortType = 'tipoAtendimento'; sortReverse = !sortReverse"> -->
+<!-- 		       Tipo -->
+<!-- 		       	<span ng-show="sortType == 'tipoAtendimento' && !sortReverse" class="ion-arrow-down-b"></span> -->
+<!-- 		       		<span ng-show="sortType == 'tipoAtendimento' && sortReverse" class="ion-arrow-up-b"></span> -->
+<!-- 		       	</a> -->
+<!-- 		       </div> -->
+		     </div>
+		     
+	    	<div class="row" ng-repeat="atendimento in atendimentos | orderBy:sortType:sortReverse 
+	    			| filter:{cdAtendimento:cdAtendimentoFilter} | filter:{cdPaciente:cdPacienteFilter}
+	    			| filter:{tipoAtendimento:tipoAtendimentoFilter}" >
+	     	
+	     	<div class="col col-20">{{atendimento.cdAtendimento}}</div>
+	      		<div class="col col-20">{{atendimento.cdPaciente}}</div>
+	      		<div class="col col-20">{{atendimento.nmPaciente}}</div>
+	      		<div class="col col-20">{{atendimento.dtAtendimento}}</div>
+	      		<div class="col col-20">{{atendimento.dtAlta}}</div>
+<!-- 	      		<div class="col col-20">{{atendimento.tipoAtendimento}}</div> -->
+	       	</div>
+	</div> 
+	
+	<div class="list list-inset" ng-if="selecionado == 'amb'">
+ 		<div class="list row">
+ 			<label class="item item-input col-50">
+ 				<i class="icon ion-search placeholder-icon"></i>
+ 				<input type="text" placeholder="Atendimento" ng-model="cdAtendimentoFilter">
+ 			</label>
+ 			<label class="item item-input col-50">
+ 				<i class="icon ion-search placeholder-icon"></i>
+ 				<input type="text" placeholder="Prontuário" ng-model="cdPacienteFilter">
+ 			</label>
+ 		</div>
+ 		
+ 		<div class="row header">
+ 		
+          <div class="col col-20">
+          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+          Atendimento
+          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-20">
+          	<a ng-click="sortType = 'cdPaciente'; sortReverse = !sortReverse">
+          Prontuário
+          	<span ng-show="sortType == 'cdPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-20">
+          	<a ng-click="sortType = 'nmPaciente'; sortReverse = !sortReverse">
+          Paciente
+          	<span ng-show="sortType == 'nmPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'nmPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-20">
+          	<a ng-click="sortType = 'dtAtendimento'; sortReverse = !sortReverse">
+          Dt Atendimento
+          	<span ng-show="sortType == 'dtAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'dtAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-20">
+          	<a ng-click="sortType = 'dtAlta'; sortReverse = !sortReverse">
+          Dt Alta
+          	<span ng-show="sortType == 'dtAlta' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'dtAlta' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+<!--           <div class="col col-20"> -->
+<!--           	<a ng-click="sortType = 'tipoAtendimento'; sortReverse = !sortReverse"> -->
+<!--           Tipo -->
+<!--           	<span ng-show="sortType == 'tipoAtendimento' && !sortReverse" class="ion-arrow-down-b"></span> -->
+<!--           		<span ng-show="sortType == 'tipoAtendimento' && sortReverse" class="ion-arrow-up-b"></span> -->
+<!--           	</a> -->
+<!--           </div> -->
+        </div>
+        
+       	<div class="row" ng-repeat="atendimento in atendimentos | orderBy:sortType:sortReverse 
+       			| filter:{cdAtendimento:cdAtendimentoFilter} | filter:{cdPaciente:cdPacienteFilter}
+       			| filter:{tipoAtendimento:tipoAtendimentoFilter}" >
+        	
+        		<div class="col col-20">{{atendimento.cdAtendimento}}</div>
+         		<div class="col col-20">{{atendimento.cdPaciente}}</div>
+         		<div class="col col-20">{{atendimento.nmPaciente}}</div>
+         		<div class="col col-20">{{atendimento.dtAtendimento}}</div>
+         		<div class="col col-20">{{atendimento.dtAlta}}</div>
+<!--          		<div class="col col">{{atendimento.tipoAtendimento}}</div> -->
+        </div>
+	</div> 
+	
+	<div class="list list-inset" ng-if="selecionado == 'cir'">
+ 		<div class="list row">
+ 			<label class="item item-input col-50">
+ 				<i class="icon ion-search placeholder-icon"></i>
+ 				<input type="text" placeholder="Aviso" ng-model="cdAvisoCirurgiaFilter">
+ 			</label>
+ 			<label class="item item-input col-50">
+ 				<i class="icon ion-search placeholder-icon"></i>
+ 				<input type="text" placeholder="Atendimento" ng-model="cdAtendimentoFilter">
+ 			</label>
+ 		</div>
+ 		
+ 		<div class="row header">
+ 		
+          <div class="col col-10">
+          	<a ng-click="sortType = 'cdAvisoCirurgia'; sortReverse = !sortReverse">
+          Aviso
+          	<span ng-show="sortType == 'cdAvisoCirurgia' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdAvisoCirurgia' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+          Atendimento
+          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-20">
+          	<a ng-click="sortType = 'dtAvisoCirurgia'; sortReverse = !sortReverse">
+          Dt Aviso
+          	<span ng-show="sortType == 'dtAvisoCirurgia' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'dtAvisoCirurgia' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-10">
+          	<a ng-click="sortType = 'cdPaciente'; sortReverse = !sortReverse">
+          Prontuário
+          	<span ng-show="sortType == 'cdPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'cdPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-20">
+          	<a ng-click="sortType = 'nmPaciente'; sortReverse = !sortReverse">
+          Paciente
+          	<span ng-show="sortType == 'nmPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'nmPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+          <div class="col col-30">
+          	<a ng-click="sortType = 'dsCirurgia'; sortReverse = !sortReverse">
+          Cirurgia
+          	<span ng-show="sortType == 'dsCirurgia' && !sortReverse" class="ion-arrow-down-b"></span>
+          		<span ng-show="sortType == 'dsCirurgia' && sortReverse" class="ion-arrow-up-b"></span>
+          	</a>
+          </div>
+          
+<!--           <div class="col col-10"> -->
+<!--           	<a ng-click="sortType = 'tipoFuncao'; sortReverse = !sortReverse"> -->
+<!--           Tipo -->
+<!--           	<span ng-show="sortType == 'tipoFuncao' && !sortReverse" class="ion-arrow-down-b"></span> -->
+<!--           		<span ng-show="sortType == 'tipoFuncao' && sortReverse" class="ion-arrow-up-b"></span> -->
+<!--           	</a> -->
+<!--           </div> -->
+        </div>
+        
+       	<div class="row" ng-repeat="cirurgia in cirurgias | orderBy:sortType:sortReverse 
+       			| filter:{cdAvisoCirurgia:cdAvisoCirurgiaFilter} | filter:{cdAtendimento:cdAtendimentoFilter}
+       			| filter:{tipoFuncao:tipoFuncaoFilter}" >
+        	
+        	<div class="col col-10 prestador">
+        		<a href="#/app/descricao/{{cirurgia.cdAvisoCirurgia}}/{{cirurgia.cdPrestador}}/{{cirurgia.mes}}/{{cirurgia.ano}}">{{cirurgia.cdAvisoCirurgia}}</a>
+        	</div>
+        	<div class="col col-10">{{cirurgia.cdAtendimento}}</div>
+         		<div class="col col-20">{{cirurgia.dtAvisoCirurgia}}</div>
+         		<div class="col col-10">{{cirurgia.cdPaciente}}</div>
+         		<div class="col col-20">{{cirurgia.nmPaciente}}</div>
+         		<div class="col col-30">{{cirurgia.dsCirurgia}}</div>
+<!--          		<div class="col col-10">{{cirurgia.tipoFuncao}}</div> -->
+          	</div>
+	</div> 
+	
+	<div class="list list-inset" ng-if="selecionado == 'aux'">
+	 		<div class="list row">
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Aviso" ng-model="cdAvisoCirurgiaFilter">
+	 			</label>
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Atendimento" ng-model="cdAtendimentoFilter">
+	 			</label>
+	 		</div>
+	 		
+	 		<div class="row header">
+	 		
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdAvisoCirurgia'; sortReverse = !sortReverse">
+	          Aviso
+	          	<span ng-show="sortType == 'cdAvisoCirurgia' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdAvisoCirurgia' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+	          Atendimento
+	          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-20">
+	          	<a ng-click="sortType = 'dtAvisoCirurgia'; sortReverse = !sortReverse">
+	          Dt Aviso
+	          	<span ng-show="sortType == 'dtAvisoCirurgia' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dtAvisoCirurgia' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdPaciente'; sortReverse = !sortReverse">
+	          Prontuário
+	          	<span ng-show="sortType == 'cdPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-20">
+	          	<a ng-click="sortType = 'nmPaciente'; sortReverse = !sortReverse">
+	          Paciente
+	          	<span ng-show="sortType == 'nmPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'nmPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-30">
+	          	<a ng-click="sortType = 'dsCirurgia'; sortReverse = !sortReverse">
+	          Cirurgia
+	          	<span ng-show="sortType == 'dsCirurgia' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dsCirurgia' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+<!-- 	          <div class="col col-10"> -->
+<!-- 	          	<a ng-click="sortType = 'tipoFuncao'; sortReverse = !sortReverse"> -->
+<!-- 	          Tipo -->
+<!-- 	          	<span ng-show="sortType == 'tipoFuncao' && !sortReverse" class="ion-arrow-down-b"></span> -->
+<!--            		<span ng-show="sortType == 'tipoFuncao' && sortReverse" class="ion-arrow-up-b"></span> -->
+<!-- 	          	</a> -->
+<!-- 	          </div> -->
+	        </div>
+	        
+        	<div class="row" ng-repeat="cirurgia in cirurgias | orderBy:sortType:sortReverse 
+        			| filter:{cdAvisoCirurgia:cdAvisoCirurgiaFilter} | filter:{cdAtendimento:cdAtendimentoFilter}
+        			| filter:{tipoFuncao:tipoFuncaoFilter}" >
+	        	
+	        	<div class="col col-10">{{cirurgia.cdAvisoCirurgia}}</div>
+	        	<div class="col col-10">{{cirurgia.cdAtendimento}}</div>
+          		<div class="col col-20">{{cirurgia.dtAvisoCirurgia}}</div>
+          		<div class="col col-10">{{cirurgia.cdPaciente}}</div>
+          		<div class="col col-20">{{cirurgia.nmPaciente}}</div>
+          		<div class="col col-30">{{cirurgia.dsCirurgia}}</div>
+<!--           		<div class="col col-10">{{cirurgia.tipoFuncao}}</div> -->
+           	</div>
+	</div> 
+	
+	<div class="list list-inset" ng-if="selecionado == 'parSol'">
+	 		<div class="list row">
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Parecer" ng-model="cdParMedFilter">
+	 			</label>
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Atendimento" ng-model="cdAtendimentoFilter">
+	 			</label>
+	 		</div>
+	 		
+	 		<div class="row header">
+	 		
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdParMed'; sortReverse = !sortReverse">
+	          Parecer
+	          	<span ng-show="sortType == 'cdParMed' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdParMed' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+	          Atendimento
+	          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col">
+	          	<a ng-click="sortType = 'dtParecer'; sortReverse = !sortReverse">
+	          Dt Solicitação
+	          	<span ng-show="sortType == 'dtParecer' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dtParecer' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-33">
+	          	<a ng-click="sortType = 'dsSolicitacao'; sortReverse = !sortReverse">
+	          Solicitação
+	          	<span ng-show="sortType == 'dsSolicitacao' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dsSolicitacao' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-33">
+	          	<a ng-click="sortType = 'dsParecer'; sortReverse = !sortReverse">
+	          Parecer
+	          	<span ng-show="sortType == 'dsParecer' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dsParecer' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	        </div>
+	        
+        	<div class="row" ng-repeat="parecer in pareceres | orderBy:sortType:sortReverse 
+        			| filter:{cdParMed:cdParMedFilter} | filter:{cdAtendimento:cdAtendimentoFilter}
+        			| filter:{tipoParecer:tipoParecerFilter}" >
+	        	
+          		<div class="col col-10">{{parecer.cdParMed}}</div>
+          		<div class="col col-10">{{parecer.cdAtendimento}}</div>
+          		<div class="col col">{{parecer.dtParecer}}</div>
+          		<div class="col col-33">{{parecer.dsSolicitacao}}</div>
+          		<div class="col col-33">{{parecer.dsParecer}}</div>
+           	</div>
+	</div> 
+	
+	<div class="list list-inset" ng-if="selecionado == 'parRes'">
+	 		<div class="list row">
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Parecer" ng-model="cdParMedFilter">
+	 			</label>
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Atendimento" ng-model="cdAtendimentoFilter">
+	 			</label>
+	 		</div>
+	 		
+	 		<div class="row header">
+	 		
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdParMed'; sortReverse = !sortReverse">
+	          Parecer
+	          	<span ng-show="sortType == 'cdParMed' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdParMed' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-10">
+	          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+	          Atendimento
+	          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col">
+	          	<a ng-click="sortType = 'dtParecer'; sortReverse = !sortReverse">
+	          Dt Resposta
+	          	<span ng-show="sortType == 'dtParecer' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dtParecer' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-33">
+	          	<a ng-click="sortType = 'dsSolicitacao'; sortReverse = !sortReverse">
+	          Solicitação
+	          	<span ng-show="sortType == 'dsSolicitacao' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dsSolicitacao' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-33">
+	          	<a ng-click="sortType = 'dsParecer'; sortReverse = !sortReverse">
+	          Parecer
+	          	<span ng-show="sortType == 'dsParecer' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dsParecer' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	        </div>
+	        
+        	<div class="row" ng-repeat="parecer in pareceres | orderBy:sortType:sortReverse 
+        			| filter:{cdParMed:cdParMedFilter} | filter:{cdAtendimento:cdAtendimentoFilter}
+        			| filter:{tipoParecer:tipoParecerFilter}" >
+	        	
+          		<div class="col col-10">{{parecer.cdParMed}}</div>
+          		<div class="col col-10">{{parecer.cdAtendimento}}</div>
+          		<div class="col col">{{parecer.dtParecer}}</div>
+          		<div class="col col-33">{{parecer.dsSolicitacao}}</div>
+          		<div class="col col-33">{{parecer.dsParecer}}</div>
+           	</div>
+	</div> 
+	
+	<div class="list list-inset" ng-if="selecionado == 'enc'">
+	 		<div class="list row">
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Encaminhamento" ng-model="cdEncaminhamentoFilter">
+	 			</label>
+	 			<label class="item item-input col-50">
+	 				<i class="icon ion-search placeholder-icon"></i>
+	 				<input type="text" placeholder="Atendimento" ng-model="cdAtendimentoFilter">
+	 			</label>
+	 		</div>
+	 		
+	 		<div class="row header">
+	 		
+	          <div class="col col-20">
+	          	<a ng-click="sortType = 'cdEncaminhamento'; sortReverse = !sortReverse">
+	          Encaminhamento
+	          	<span ng-show="sortType == 'cdEncaminhamento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdEncaminhamento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-20">
+	          	<a ng-click="sortType = 'cdAtendimento'; sortReverse = !sortReverse">
+	          Atendimento
+	          	<span ng-show="sortType == 'cdAtendimento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdAtendimento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-20">
+	          	<a ng-click="sortType = 'dtEncaminhamento'; sortReverse = !sortReverse">
+	          Dt Encaminhamento
+	          	<span ng-show="sortType == 'dtEncaminhamento' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'dtEncaminhamento' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-20">
+	          	<a ng-click="sortType = 'cdPaciente'; sortReverse = !sortReverse">
+	          Prontuário
+	          	<span ng-show="sortType == 'cdPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'cdPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	          
+	          <div class="col col-20">
+	          	<a ng-click="sortType = 'nmPaciente'; sortReverse = !sortReverse">
+	          Paciente
+	          	<span ng-show="sortType == 'nmPaciente' && !sortReverse" class="ion-arrow-down-b"></span>
+           		<span ng-show="sortType == 'nmPaciente' && sortReverse" class="ion-arrow-up-b"></span>
+	          	</a>
+	          </div>
+	        </div>
+	        
+        	<div class="row" ng-repeat="encaminhamento in encaminhamentos | orderBy:sortType:sortReverse 
+        			| filter:{cdEncaminhamento:cdEncaminhamentoFilter} | filter:{cdAtendimento:cdAtendimentoFilter}">
+	        	
+          		<div class="col col-20">{{encaminhamento.cdEncaminhamento}}</div>
+          		<div class="col col-20">{{encaminhamento.cdAtendimento}}</div>
+          		<div class="col col-20">{{encaminhamento.dtEncaminhamento}}</div>
+          		<div class="col col-20">{{encaminhamento.cdPaciente}}</div>
+          		<div class="col col-20">{{encaminhamento.nmPaciente}}</div>
+           	</div>
+	</div> 
+  </ion-content>
+ </ion-view>

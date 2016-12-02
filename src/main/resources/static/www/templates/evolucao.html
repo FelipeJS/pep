@@ -1,0 +1,30 @@
+<ion-view view-title="Evolução">
+	<link rel="stylesheet" type="text/css" href="css/produtividade.css">
+	
+  <ion-content>
+  	<div class="list list-inset">
+	    	<div class="list">
+				<div class="item item-divider">
+				  <b>{{"Evolução: "}}</b>
+				  {{cdPreMed}}  
+				</div>
+			</div>
+	</div>
+    <div class="list list-inset">
+ 		<div class="row header">
+	        <div class="col">
+	        	<a ng-click="sortType = 'dsEvolucao'; sortReverse = !sortReverse">
+	        Descrição
+	        	<span ng-show="sortType == 'dsEvolucao' && !sortReverse" class="ion-arrow-down-b"></span>
+	        		<span ng-show="sortType == 'dsEvolucao' && sortReverse" class="ion-arrow-up-b"></span>
+	        	</a>
+	        </div>
+        </div>
+        
+       	<div class="row" ng-repeat="prescricao in prescricoes | orderBy:sortType:sortReverse 
+       			| filter:{cdPreMed:cdPreMedFilter} | filter:{dsEvolucao:dsEvolucaoFilter}">
+       		<div class="col">{{prescricao.dsEvolucao}}</div>
+       	</div>
+	</div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Sair</title>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--     	<link rel="stylesheet" type="text/css" media="all"   -->
+<!--       		href="../lib/ionic/css/ionic.css" th:href="@{../lib/ionic/css/ionic.css}" /> -->
+      	
+<!--       	<link rel="stylesheet" type="text/css" media="all"   -->
+<!--       		href="../www/css/produtividade.css" th:href="@{../www/css/produtividade.css}" /> -->
+      		
+      	<link th:href="@{/www/css/produtividade.css}" href="/www/css/produtividade.css"  rel="stylesheet" type="text/css"  />
+      	<link th:href="@{/www/lib/ionic/css/ionic.css}" href="/www/lib/ionic/css/ionic.css"  rel="stylesheet" type="text/css"  />
+    </head>
+    <body>
+    	<div class="bar bar-header bar-stable">
+			 <h1 class="title">Produtividade Médica</h1>
+		</div>
+		<br/><br/>
+		<ion-content class="has-header">
+<!--         <center><h1 th:inline="text">Obrigado [[${#httpServletRequest.remoteUser}]]!</h1></center> -->
+        <a href="/produtividade/www/index.html">
+        	<input type="submit" value="Voltar" class="button button-block button-positive"/>
+        </a>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sair" class="button button-block button-assertive"/>
+        </form>
+        </ion-content>
+    </body>
+</html>
